@@ -474,7 +474,7 @@ Sudoku >> findMostPromisingProspect: aBoard [
 			b := ((Blocks at: i) value: m) asSet. "cell values of block of position i"
 			rcb := (r union: c) union: b.
 			vals := (1 to: 9) asSet difference: rcb. "possible values in position i"
-			vals isNotEmpty ifTrue: [ tuples add: { i . vals } ] ] ].
+			vals isNotEmpty ifTrue: [ tuples add: { i . vals } ] ] ]. "can only happen with invalid boards"
 	tuples sort: [ :t1 :t2 | t1 second size < t2 second size ]. "sort by least number of possible values"
 	^ tuples
 ]
