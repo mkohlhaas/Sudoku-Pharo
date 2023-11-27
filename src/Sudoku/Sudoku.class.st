@@ -489,7 +489,7 @@ Sudoku >> findMostPromisingProspect: aBoard [
 					i.
 					pv } ].
 		res sort: [ :t1 :t2 | t1 second size < t2 second size ] ]. "sort by least number of possible values"
-	^ res first "first in the list is the best prospect"
+	^ res first "first is the best prospect"
 ]
 
 { #category : #utilities }
