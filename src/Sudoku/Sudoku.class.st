@@ -461,8 +461,8 @@ Sudoku >> boards: anObject [
 ]
 
 { #category : #private }
-Sudoku >> findMostPromisingProspect: aBoard [
-	"aBoard -> Tuple(empty position, Set(possible cell values at this empty position))"
+Sudoku >> findCandidates: aBoard [
+	"aBoard -> List(Tuple(empty position, Set(possible cell values at this empty position)))"
 
 	| m r c b tuples rcb vals |
 	tuples := OrderedCollection new.
@@ -494,7 +494,7 @@ Sudoku >> solve [
 	(self isSolved: b)
 		ifTrue: [ ^ b ]
 		ifFalse: [
-			candidates := self findMostPromisingProspect: b.
+			candidates := self findCandidates: b.
 			candidates isNotEmpty ifTrue: [
 				bestCandidate := candidates first.
 				pos := bestCandidate first.
