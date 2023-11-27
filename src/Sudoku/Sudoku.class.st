@@ -497,10 +497,10 @@ Sudoku >> solve [
 			bestCandidate := self findMostPromisingProspect: b.
 			pos := bestCandidate first.
 			cellValues := bestCandidate second.
-			cellValues isEmpty ifTrue: [ self error: 'This is not a valid Sudoku board.' ].
-			cellValues do: [ :n | "we generate more boards and put it in the boards queue"
-				b1 := b copy.
-				b1 at: pos put: n.
-				boards enqueue: b1 ].
+			cellValues isNotEmpty ifTrue: [
+				cellValues do: [ :n | "we generate more boards and put it in the boards queue"
+					b1 := b copy.
+					b1 at: pos put: n.
+					boards enqueue: b1 ] ].
 			^ self solve ]
 ]
