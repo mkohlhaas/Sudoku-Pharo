@@ -474,8 +474,8 @@ Sudoku >> boards: anObject [
 Sudoku >> findMostPromisingProspect: aBoard [
 	"aBoard -> Tuple(position, Set(possible cell values at this position))"
 
-	| m r c b res rcb vals |
-	res := OrderedCollection new.
+	| m r c b tuple rcb vals |
+	tuple := OrderedCollection new.
 	m := Array2D rows: 9 columns: 9 contents: aBoard.
 	1 to: 9 * 9 do: [ :i |
 		(aBoard at: i) isZero ifTrue: [
@@ -484,9 +484,9 @@ Sudoku >> findMostPromisingProspect: aBoard [
 			b := ((self class blocks at: i) value: m) asSet. "cell values of block of position i"
 			rcb := (r union: c) union: b.
 			vals := (1 to: 9) asSet difference: rcb. "possible values in position i"
-			res add: { i .	vals } ].
-		res sort: [ :t1 :t2 | t1 second size < t2 second size ] ]. "sort by least number of possible values"
-	^ res first "first is the best prospect"
+			tuple add: { i .	vals } ].
+		tuple sort: [ :t1 :t2 | t1 second size < t2 second size ] ]. "sort by least number of possible values"
+	^ tuple first "first is the best prospect"
 ]
 
 { #category : #utilities }
