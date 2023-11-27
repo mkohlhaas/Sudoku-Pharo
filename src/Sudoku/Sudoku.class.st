@@ -502,6 +502,7 @@ Sudoku >> solve [
 				cellValues do: [ :n | "we generate more boards and put it in the boards queue"
 					b1 := b copy.
 					b1 at: pos put: n.
+					(self isSolved: b1) ifTrue: [ ^ b1 ].
 					boards enqueue: b1 ] ].
 			^ self solve ]
 ]
