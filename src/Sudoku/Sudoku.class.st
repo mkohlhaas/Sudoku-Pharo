@@ -468,7 +468,7 @@ Sudoku >> findMostPromisingProspect: aBoard [
 	tuples := OrderedCollection new.
 	m := Array2D rows: 9 columns: 9 contents: aBoard.
 	1 to: 9 * 9 do: [ :i |
-		(aBoard at: i) isZero ifTrue: [
+		(aBoard at: i) isZero ifTrue: [ "empty cell"
 			r := ((Rows at: i) value: m) asSet. "cell values of row of position i"
 			c := ((Cols at: i) value: m) asSet. "cell values of column of position i"
 			b := ((Blocks at: i) value: m) asSet. "cell values of block of position i"
