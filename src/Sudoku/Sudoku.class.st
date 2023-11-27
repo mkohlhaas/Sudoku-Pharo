@@ -376,6 +376,12 @@ Sudoku class >> initialize [
 		          [ :b | self class b9: b ] }
 ]
 
+{ #category : #'instance creation' }
+Sudoku class >> isBoard: aBoard [
+
+	^ aBoard size = 81 and: [ (0 to: 9) includesAll: aBoard ]
+]
+
 { #category : #accessing }
 Sudoku class >> r1: aBoard [
 
@@ -434,9 +440,12 @@ Sudoku class >> r9: aBoard [
 Sudoku class >> with: aBoard [
 
 	| s |
-	s := self new boards: Queue new.
-	s boards enqueue: aBoard copy.
-	^ s
+	(self isBoard: aBoard)
+		ifTrue: [
+			s := self new boards: Queue new.
+			s boards enqueue: aBoard copy.
+			^ s ]
+		ifFalse: [ self error: 'This is not a board! 😠' ]
 ]
 
 { #category : #private }
