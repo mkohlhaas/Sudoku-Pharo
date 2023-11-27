@@ -70,12 +70,6 @@ Sudoku class >> b9: aBoard [
 ]
 
 { #category : #accessing }
-Sudoku class >> blocks [
-
-	^ Blocks
-]
-
-{ #category : #accessing }
 Sudoku class >> c1: aBoard [
 
 	^ aBoard transposed atRows: #( 1 ) columns: #( 1 2 3 4 5 6 7 8 9 )
@@ -127,12 +121,6 @@ Sudoku class >> c8: aBoard [
 Sudoku class >> c9: aBoard [
 
 	^ aBoard transposed atRows: #( 9 ) columns: #( 1 2 3 4 5 6 7 8 9 )
-]
-
-{ #category : #accessing }
-Sudoku class >> cols [
-
-	^ Cols
 ]
 
 { #category : #'class initialization' }
@@ -442,18 +430,11 @@ Sudoku class >> r9: aBoard [
 	^ aBoard atRows: #( 9 ) columns: #( 1 2 3 4 5 6 7 8 9 )
 ]
 
-{ #category : #accessing }
-Sudoku class >> rows [
-
-	^ Rows
-]
-
 { #category : #'instance creation' }
 Sudoku class >> with: aBoard [
 
 	| s |
-	s := self new.
-	s boards: Queue new.
+	s := self new boards: Queue new.
 	s boards enqueue: aBoard copy.
 	^ s
 ]
@@ -472,16 +453,16 @@ Sudoku >> boards: anObject [
 
 { #category : #private }
 Sudoku >> findMostPromisingProspect: aBoard [
-	"aBoard -> Tuple(position, Set(possible cell values at this position))"
+	"aBoard -> Tuple(empty position, Set(possible cell values at this empty position))"
 
 	| m r c b tuples rcb vals |
 	tuples := OrderedCollection new.
 	m := Array2D rows: 9 columns: 9 contents: aBoard.
 	1 to: 9 * 9 do: [ :i |
 		(aBoard at: i) isZero ifTrue: [
-			r := ((self class rows at: i) value: m) asSet. "cell values of row of position i"
-			c := ((self class cols at: i) value: m) asSet. "cell values of column of position i"
-			b := ((self class blocks at: i) value: m) asSet. "cell values of block of position i"
+			r := ((Rows at: i) value: m) asSet. "cell values of row of position i"
+			c := ((Cols at: i) value: m) asSet. "cell values of column of position i"
+			b := ((Blocks at: i) value: m) asSet. "cell values of block of position i"
 			rcb := (r union: c) union: b.
 			vals := (1 to: 9) asSet difference: rcb. "possible values in position i"
 			tuples add: { i . vals } ].
