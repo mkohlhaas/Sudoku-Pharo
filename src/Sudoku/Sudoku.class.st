@@ -485,9 +485,7 @@ Sudoku >> findMostPromisingProspect: aBoard [
 			rcb := (r union: c) union: b.
 			posValues := (1 to: 9) asSet difference: rcb. "possible values in position i"
 			pv := posValues reject: [ :n | n isZero ]. "filter out empty cell value (0)"
-			res add: {
-					i.
-					pv } ].
+			res add: { i .	pv } ].
 		res sort: [ :t1 :t2 | t1 second size < t2 second size ] ]. "sort by least number of possible values"
 	^ res first "first is the best prospect"
 ]
