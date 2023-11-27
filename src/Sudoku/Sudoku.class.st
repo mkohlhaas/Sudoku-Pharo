@@ -467,7 +467,7 @@ Sudoku >> findMostPromisingProspect: aBoard [
 			vals := (1 to: 9) asSet difference: rcb. "possible values in position i"
 			tuples add: { i . vals } ] ].
 	tuples sort: [ :t1 :t2 | t1 second size < t2 second size ]. "sort by least number of possible values"
-	^ tuples first "first is the best prospect"
+	^ tuples first "returns the best prospect"
 ]
 
 { #category : #utilities }
