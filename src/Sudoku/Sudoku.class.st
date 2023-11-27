@@ -474,9 +474,10 @@ Sudoku >> findMostPromisingProspect: aBoard [
 			b := ((Blocks at: i) value: m) asSet. "cell values of block of position i"
 			rcb := (r union: c) union: b.
 			vals := (1 to: 9) asSet difference: rcb. "possible values in position i"
-			tuples add: { i . vals } ] ].
+			vals isNotEmpty ifTrue: [
+				tuples add: { i . vals } ] ] ].
 	tuples sort: [ :t1 :t2 | t1 second size < t2 second size ]. "sort by least number of possible values"
-	^ tuples first "returns the best prospect"
+	^ tuples
 ]
 
 { #category : #utilities }
@@ -489,15 +490,16 @@ Sudoku >> isSolved: aBoard [
 { #category : #api }
 Sudoku >> solve [
 
-	| b b1 bestCandidate pos cellValues |
+	| b b1 candidates bestCandidate pos cellValues |
 	b := boards dequeue.
 	(self isSolved: b)
 		ifTrue: [ ^ b ]
 		ifFalse: [
-			bestCandidate := self findMostPromisingProspect: b.
-			pos := bestCandidate first.
-			cellValues := bestCandidate second.
-			cellValues isNotEmpty ifTrue: [
+			candidates := self findMostPromisingProspect: b.
+			candidates isNotEmpty ifTrue: [
+				bestCandidate := candidates first.
+				pos := bestCandidate first.
+				cellValues := bestCandidate second.
 				cellValues do: [ :n | "we generate more boards and put it in the boards queue"
 					b1 := b copy.
 					b1 at: pos put: n.
